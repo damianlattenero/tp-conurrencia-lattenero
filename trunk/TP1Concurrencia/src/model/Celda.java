@@ -22,6 +22,7 @@ public class Celda<E> {
 	public static Lock lock = new ReentrantLock();
 	private Condition conditionLectura = lock.newCondition();
 	private Condition conditionEscritura = lock.newCondition();
+	
 	//separar la operacion de lectura
 	
 	public void leer(Lector lect){
