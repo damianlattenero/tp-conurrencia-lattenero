@@ -9,7 +9,7 @@ public class Matriz<E extends ReadWrite> {
 
 	private void colocarColumna(int a){
 		for(int y = 0; y < this.getCantColumnas();y++){
-			 this.getEstructura()[a][y] = new Celda(a,y);
+			 this.getEstructura()[a][y] = new Celda<E>(a,y);
 		}
 	}
 	
@@ -50,7 +50,7 @@ public class Matriz<E extends ReadWrite> {
 		this.cantColumnas = cantColumnas;
 	}
 	
-	public Celda dameCeldaDe(int nroFila, int nroColumna){
+	public Celda<?> dameCeldaDe(int nroFila, int nroColumna){
 		return this.getEstructura()[nroFila][nroColumna];
 	}
 
