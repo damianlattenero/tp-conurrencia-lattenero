@@ -10,12 +10,12 @@ public class Escritor extends Thread{
 	public void run() {
 		{
 
-			this.escribirResultadosSobreFila(new Object());
+			//this.escribirResultadosSobreFila(new Object());
 				
 		}
 	}
 	
-	private void escribirResultadosSobreFila(Object contenido){
+	private  void escribirResultadosSobreFila(ReadWrite contenido){
 		
 		RowIterator it = this.getIterador();
 		it.getMatriz().reservarFila(it.getNroFila());

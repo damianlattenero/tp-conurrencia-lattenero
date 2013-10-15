@@ -18,7 +18,7 @@ public class Lector extends Thread{
 	public void leerResultados(){
 		RowIterator it = this.getIterador();
 		while(it.hasCurrent()){
-			it.getCeldaActual().leer(this);
+			it.getCeldaActual().leer();
 			it.next();
 		}
 	}

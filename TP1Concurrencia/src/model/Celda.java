@@ -3,7 +3,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class Celda<E> {
+public class Celda<E extends ReadWrite> {
 	
 	int nroFila;
 	int nroColumna;
@@ -25,7 +25,7 @@ public class Celda<E> {
 	
 	//separar la operacion de lectura
 	
-	public void leer(Lector lect){
+	public void leer(){
 		lock.lock();
 		while(isHayEscritor() || this.getContenido() == null){
 			try {
@@ -34,7 +34,7 @@ public class Celda<E> {
 				e.printStackTrace();
 			}
 			this.setNroLectores(this.getNroLectores()+1);
-			//this.contenido(); Lee
+			this.getContenido().leer();
 			this.setNroLectores(this.getNroLectores()-1);
 			if(this.getNroLectores() == 0){
 				conditionEscritura.signal();
@@ -43,7 +43,7 @@ public class Celda<E> {
 		lock.unlock();
 	}
 	
-	public void escribir(E contenido){
+	public void escribir(ReadWrite contenido2){
 		lock.lock();
 		while(this.isHayEscritor() || this.getNroLectores() > 0){
 			try {
@@ -51,10 +51,9 @@ public class Celda<E> {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			this.setContenido(contenido);
-			
+			this.getContenido().escribir();
+			contenido2.escribir();
 			conditionLectura.signalAll();
-			conditionEscritura.signal();
 		}
 		lock.unlock();
 	}
@@ -93,12 +92,38 @@ public class Celda<E> {
 		this.nroColumna = nroColumna;
 	}
 
-	public Object getContenido() {
+	public E getContenido() {
 		return contenido;
 	}
 
 	public void setContenido(E contenido) {
 		this.contenido = contenido;
 	}
+
+	public static Lock getLock() {
+		return lock;
+	}
+
+	public static void setLock(Lock lock) {
+		Celda.lock = lock;
+	}
+
+	public Condition getConditionLectura() {
+		return conditionLectura;
+	}
+
+	public void setConditionLectura(Condition conditionLectura) {
+		this.conditionLectura = conditionLectura;
+	}
+
+	public Condition getConditionEscritura() {
+		return conditionEscritura;
+	}
+
+	public void setConditionEscritura(Condition conditionEscritura) {
+		this.conditionEscritura = conditionEscritura;
+	}
+	
+	
 
 }

@@ -2,8 +2,8 @@ package model;
 
 public class RowIterator {
 	
-	Matriz matriz;
-	Celda celdaActual;
+	Matriz<?> matriz;
+	Celda<?> celdaActual;
 	int nroFila;
 	
 	/**
@@ -16,7 +16,7 @@ public class RowIterator {
 	 * @param numeroFila
 	 */
 	
-	public RowIterator(Matriz matriz, int numeroFila) {
+	public RowIterator(Matriz<?> matriz, int numeroFila) {
 		super();
 		this.matriz = matriz;
 		//Al momento de la creacion se debe bloquear sino tiene todos los permisos
@@ -41,7 +41,7 @@ public class RowIterator {
 		
 	}
 	
-	protected Celda next(){
+	protected Celda<?> next(){
 		return this.getMatriz().dameCeldaDe(this.getNroFila(),this.getCeldaActual().getNroColumna()+ 1);
 	}
 	
@@ -50,19 +50,19 @@ public class RowIterator {
 	
 	
 
-	public Celda getCeldaActual() {
+	public Celda<?> getCeldaActual() {
 		return celdaActual;
 	}
 
-	public void setCeldaActual(Celda celdaActual) {
+	public void setCeldaActual(Celda<?> celdaActual) {
 		this.celdaActual = celdaActual;
 	}
 
-	public Matriz getMatriz() {
+	public Matriz<?> getMatriz() {
 		return matriz;
 	}
 
-	public void setMatriz(Matriz matriz) {
+	public void setMatriz(Matriz<?> matriz) {
 		this.matriz = matriz;
 	}
 
