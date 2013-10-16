@@ -7,7 +7,7 @@ public class Celda<E extends ReadWrite> {
 	
 	int nroFila;
 	int nroColumna;
-	E contenido;
+	Object contenido;
 	int nroLectores;
 	boolean hayEscritor;
 	
@@ -69,9 +69,10 @@ public class Celda<E extends ReadWrite> {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			this.getContenido().escribir();
-			contenido2.escribir();
+			this.setContenido(new Object());
+			this.setHayEscritor(false);
 			conditionLectura.signalAll();
+			conditionEscritura.signal();
 		}
 		lock.unlock();
 	}
@@ -110,12 +111,12 @@ public class Celda<E extends ReadWrite> {
 		this.nroColumna = nroColumna;
 	}
 
-	public E getContenido() {
+	public Object getContenido() {
 		return contenido;
 	}
 
-	public void setContenido(E contenido) {
-		this.contenido = contenido;
+	public void setContenido(Object object) {
+		this.contenido = object;
 	}
 
 	public static Lock getLock() {
