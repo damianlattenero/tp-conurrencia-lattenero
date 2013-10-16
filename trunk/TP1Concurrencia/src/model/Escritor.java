@@ -1,23 +1,10 @@
 package model;
 
 
-public class Escritor extends Thread{
-
+public class Escritor extends Rol{
 	
-	RowIterator iterador;
-	
-	@Override
-	public void run() {
-		{
-
-			//this.escribirResultadosSobreFila(new Object());
-				
-		}
-	}
-	
-	private  void escribirResultadosSobreFila(ReadWrite contenido){
-		
-		RowIterator it = this.getIterador();
+	private  void escribirResultadosSobreFila(int fila, ReadWrite contenido){
+		RowIterator it = this.crearIterador(fila);
 		it.getMatriz().reservarFila(it.getNroFila());
 		
 		while(it.hasCurrent()){
@@ -26,25 +13,15 @@ public class Escritor extends Thread{
 		}
 	}
 	
-	
-
-	public Escritor(RowIterator iterador) {
-		super();
-		this.iterador = iterador;
-	}
-
-
-
-	public RowIterator getIterador() {
-		return iterador;
-	}
-
-	public void setIterador(RowIterator iterador) {
-		this.iterador = iterador;
+	private boolean hayLectores(int x,int nroFilaAModificar){
+		return this.getMatriz().getEstructura()[nroFilaAModificar][x].getNroLectores() > 0;
 	}
 	
-	
-
-
-
+	public boolean puedoReservarFila(int nroFilaAModificar){
+		boolean puedo = true;
+		for(int x = 0; x < this.getMatriz().getCantColumnas();x++){
+			puedo = puedo && (this.hayEscritores(x,nroFilaAModificar) || this.hayLectores(x,nroFilaAModificar));
+		}
+		return puedo;
+	}
 }
