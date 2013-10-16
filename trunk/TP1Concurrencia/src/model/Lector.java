@@ -4,10 +4,13 @@ public class Lector extends Rol{
 	
 	RowIterator iterador;
 	
-	public void leerResultados(){
-		RowIterator it = this.getIterador();
+	public void leerResultados(int fila){
+		RowIterator it = this.crearIterador(fila);
+		
 		while(it.hasCurrent()){
 			it.getCeldaActual().empezarALeer();
+			//
+			it.getCeldaActual().terminarDeLeer();
 			it.next();
 		}
 	}

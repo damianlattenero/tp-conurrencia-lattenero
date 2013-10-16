@@ -11,6 +11,7 @@ public class Escritor extends Rol{
 			it.getCeldaActual().escribir(contenido);
 			it.next();
 		}
+		iteradorExcMutua.signal();
 	}
 	
 	private boolean hayLectores(int x,int nroFilaAModificar){
