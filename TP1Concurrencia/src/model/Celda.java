@@ -44,6 +44,7 @@ public class Celda<E extends ReadWrite> {
 //	}
 	
 	public void empezarALeer(){
+		lock.lock();
 		while(isHayEscritor() || this.getContenido() == null){
 			try {
 				conditionLectura.await();
@@ -52,13 +53,16 @@ public class Celda<E extends ReadWrite> {
 			}
 			this.setNroLectores(this.getNroLectores()+1);
 		}
+		lock.unlock();
 	}
 	
 	public void terminarDeLeer(){
+		lock.lock();
 		this.setNroLectores(this.getNroLectores()-1);
 		if(this.getNroLectores() == 0){
 			conditionEscritura.signal();
 		}
+		lock.unlock();
 	}
 	
 	public void escribir(ReadWrite contenido2){
