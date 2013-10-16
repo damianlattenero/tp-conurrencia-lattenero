@@ -25,8 +25,25 @@ public class Celda<E extends ReadWrite> {
 	
 	//separar la operacion de lectura
 	
-	public void leer(){
-		lock.lock();
+//	public void leer(){
+//		lock.lock();
+//		while(isHayEscritor() || this.getContenido() == null){
+//			try {
+//				conditionLectura.await();
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			this.setNroLectores(this.getNroLectores()+1);
+//			//this.getContenido().leer();
+//			this.setNroLectores(this.getNroLectores()-1);
+//			if(this.getNroLectores() == 0){
+//				conditionEscritura.signal();
+//			}
+//		}
+//		lock.unlock();
+//	}
+	
+	public void empezarALeer(){
 		while(isHayEscritor() || this.getContenido() == null){
 			try {
 				conditionLectura.await();
@@ -34,13 +51,14 @@ public class Celda<E extends ReadWrite> {
 				e.printStackTrace();
 			}
 			this.setNroLectores(this.getNroLectores()+1);
-			this.getContenido().leer();
-			this.setNroLectores(this.getNroLectores()-1);
-			if(this.getNroLectores() == 0){
-				conditionEscritura.signal();
-			}
 		}
-		lock.unlock();
+	}
+	
+	public void terminarDeLeer(){
+		this.setNroLectores(this.getNroLectores()-1);
+		if(this.getNroLectores() == 0){
+			conditionEscritura.signal();
+		}
 	}
 	
 	public void escribir(ReadWrite contenido2){

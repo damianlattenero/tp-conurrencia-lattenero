@@ -16,9 +16,9 @@ public class RowIterator {
 	 * @param numeroFila
 	 */
 	
-	public RowIterator(Matriz<?> matriz, int numeroFila) {
-		super();
-		this.matriz = matriz;
+	public RowIterator(int numeroFila) {
+		//super();
+		//this.matriz = matriz;
 		//Al momento de la creacion se debe bloquear sino tiene todos los permisos
 		//this.celdaActual = matriz.dameCeldaDe(); chequear
 		this.nroFila = numeroFila;
@@ -45,11 +45,6 @@ public class RowIterator {
 		return this.getMatriz().dameCeldaDe(this.getNroFila(),this.getCeldaActual().getNroColumna()+ 1);
 	}
 	
-	
-	
-	
-	
-
 	public Celda<?> getCeldaActual() {
 		return celdaActual;
 	}
