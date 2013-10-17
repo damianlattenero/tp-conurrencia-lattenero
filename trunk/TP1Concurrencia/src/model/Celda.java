@@ -25,26 +25,26 @@ public class Celda<E extends ReadWrite> {
 	
 	//separar la operacion de lectura
 	
-//	public void leer(){
-//		lock.lock();
-//		while(isHayEscritor() || this.getContenido() == null){
-//			try {
-//				conditionLectura.await();
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-//			this.setNroLectores(this.getNroLectores()+1);
-//			//this.getContenido().leer();
-//			this.setNroLectores(this.getNroLectores()-1);
-//			if(this.getNroLectores() == 0){
-//				conditionEscritura.signal();
-//			}
-//		}
-//		lock.unlock();
-//	}
+	public void leer(){
+		this.empezarALeer();
+		while(isHayEscritor() || this.getContenido() == null){
+			try {
+				conditionLectura.await();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			this.setNroLectores(this.getNroLectores()+1);
+			//this.getContenido().leer();
+			this.setNroLectores(this.getNroLectores()-1);
+			if(this.getNroLectores() == 0){
+				conditionEscritura.signal();
+			}
+		}
+		this.terminarDeLeer();
+	}
 	
-	public void empezarALeer(){
-		lock.lock();
+	public synchronized void empezarALeer(){
+		
 		while(isHayEscritor() || this.getContenido() == null){
 			try {
 				conditionLectura.await();
@@ -53,20 +53,20 @@ public class Celda<E extends ReadWrite> {
 			}
 			this.setNroLectores(this.getNroLectores()+1);
 		}
-		lock.unlock();
+
 	}
 	
-	public void terminarDeLeer(){
-		lock.lock();
+	public synchronized void terminarDeLeer(){
+		
 		this.setNroLectores(this.getNroLectores()-1);
 		if(this.getNroLectores() == 0){
-			conditionEscritura.signal();
+			conditionEscritura.signalAll();
 		}
-		lock.unlock();
+		
 	}
 	
-	public void escribir(ReadWrite contenido2){
-		lock.lock();
+	public void escribir(ReadWrite contenido2) throws InterruptedException{
+		this.empezarAEscribir();
 		while(this.isHayEscritor() || this.getNroLectores() > 0){
 			try {
 				conditionEscritura.await();
@@ -74,13 +74,29 @@ public class Celda<E extends ReadWrite> {
 				e.printStackTrace();
 			}
 			this.setContenido(new Object());
-			this.setHayEscritor(false);
-			conditionLectura.signalAll();
-			conditionEscritura.signal();
 		}
-		lock.unlock();
+		this.terminarDeEscribir();
+	}
+	
+	private synchronized void empezarAEscribir() throws InterruptedException {
+		
+		while(this.getNroLectores() > 0 || this.hayEscritor){
+			wait();
+		}
+		this.setHayEscritor(true);
+
+
 	}
 
+
+	private synchronized void terminarDeEscribir()  throws InterruptedException {
+
+		this.setHayEscritor(false);
+		notifyAll();
+		
+	}
+
+	
 	//getters y setters
 	
 	public int getNroLectores() {
