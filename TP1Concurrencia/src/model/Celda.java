@@ -7,7 +7,7 @@ public class Celda<E extends ReadWrite> {
 	
 	int nroFila;
 	int nroColumna;
-	Object contenido;
+	E contenido;
 	int nroLectores;
 	boolean hayEscritor;
 	
@@ -25,56 +25,32 @@ public class Celda<E extends ReadWrite> {
 	
 	//separar la operacion de lectura
 	
-	public void leer(){
+	public void leer() throws InterruptedException{
 		this.empezarALeer();
-		while(isHayEscritor() || this.getContenido() == null){
-			try {
-				conditionLectura.await();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			this.setNroLectores(this.getNroLectores()+1);
-			//this.getContenido().leer();
-			this.setNroLectores(this.getNroLectores()-1);
-			if(this.getNroLectores() == 0){
-				conditionEscritura.signal();
-			}
-		}
+			this.getContenido().leer();
 		this.terminarDeLeer();
 	}
 	
-	public synchronized void empezarALeer(){
+	public synchronized void empezarALeer() throws InterruptedException{
 		
 		while(isHayEscritor() || this.getContenido() == null){
-			try {
 				conditionLectura.await();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			this.setNroLectores(this.getNroLectores()+1);
 		}
-
+		this.setNroLectores(this.getNroLectores()+1);
 	}
 	
 	public synchronized void terminarDeLeer(){
 		
 		this.setNroLectores(this.getNroLectores()-1);
-		if(this.getNroLectores() == 0){
-			conditionEscritura.signalAll();
-		}
+		conditionEscritura.signalAll();
 		
 	}
 	
-	public void escribir(ReadWrite contenido2) throws InterruptedException{
+	public void escribir() throws InterruptedException{
 		this.empezarAEscribir();
-		while(this.isHayEscritor() || this.getNroLectores() > 0){
-			try {
-				conditionEscritura.await();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			this.setContenido(new Object());
-		}
+	
+			this.getContenido().escribir();
+		
 		this.terminarDeEscribir();
 	}
 	
@@ -99,8 +75,14 @@ public class Celda<E extends ReadWrite> {
 	
 	//getters y setters
 	
+	
+	
 	public int getNroLectores() {
 		return nroLectores;
+	}
+
+	public E getContenido() {
+		return contenido;
 	}
 
 	public void setNroLectores(int nroLectores) {
@@ -131,11 +113,9 @@ public class Celda<E extends ReadWrite> {
 		this.nroColumna = nroColumna;
 	}
 
-	public Object getContenido() {
-		return contenido;
-	}
+	
 
-	public void setContenido(Object object) {
+	public void setContenido(E object) {
 		this.contenido = object;
 	}
 

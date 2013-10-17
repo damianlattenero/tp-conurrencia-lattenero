@@ -2,13 +2,11 @@ package model;
 
 public class Lector extends Rol{
 	
-	public void leerResultados(int fila){
+	public void leerResultados(int fila) throws InterruptedException{
 		RowIterator it = this.crearIterador(fila);
 		
 		while(it.hasCurrent()){
-			it.getCeldaActual().empezarALeer();
-			//
-			it.getCeldaActual().terminarDeLeer();
+			it.getCeldaActual().leer();
 			it.next();
 		}
 	}

@@ -3,12 +3,12 @@ package model;
 
 public class Escritor extends Rol{
 	
-	private  void escribirResultadosSobreFila(int fila, ReadWrite contenido) throws InterruptedException{
+	private  void escribirResultadosSobreFila(int fila) throws InterruptedException{
 		RowIterator it = this.crearIterador(fila);
 		it.getMatriz().reservarFila(it.getNroFila());
 		
 		while(it.hasCurrent()){
-			it.getCeldaActual().escribir(contenido);
+			it.getCeldaActual().escribir();
 			it.next();
 		}
 		iteradorExcMutua.signal();
