@@ -9,15 +9,6 @@ public class RowIterator<E extends ReadWrite> {
 	int cantElementos;
 	int nroFila;
 	
-	/**
-	 * i = crearIteradorEscritura(m,1)
-	 * while(i.hasCurrent)
-	 *   Objeto elem = i.current()
-	 *   (List) elem.add(3);
-	 *   i.next
-	 * @param matriz
-	 * @param numeroFila
-	 */
 
 	public RowIterator(Matriz<E> matriz, int nroFila) {
 		super();
@@ -29,9 +20,6 @@ public class RowIterator<E extends ReadWrite> {
 
 	protected boolean hasCurrent(){
 		return this.getCantElementos() != 0;
-
-		//leer current
-		//escribir current
 	}
 	
 	
