@@ -1,9 +1,12 @@
 package model;
 
-public class RowIterator {
+import java.util.List;
+
+public class RowIterator<E extends ReadWrite> {
 	
-	Matriz<?> matriz;
-	Celda<?> celdaActual;
+	Celda<E> celdaActual;
+	List<Celda<E>> fila;
+	int cantElementos;
 	int nroFila;
 	
 	/**
@@ -15,57 +18,83 @@ public class RowIterator {
 	 * @param matriz
 	 * @param numeroFila
 	 */
-	
-	public RowIterator(int numeroFila) {
-		//super();
-		//this.matriz = matriz;
-		//Al momento de la creacion se debe bloquear sino tiene todos los permisos
-		//this.celdaActual = matriz.dameCeldaDe(); chequear
-		this.nroFila = numeroFila;
+
+	public RowIterator(Matriz<E> matriz, int nroFila) {
+		super();
+		this.celdaActual = matriz.dameCeldaDe(0, 0);
+		this.fila = matriz.getEstructura().get(nroFila);
+		this.cantElementos = fila.size();
 	}
 
 
 	protected boolean hasCurrent(){
-		return this.getCeldaActual().getNroColumna() < this.getMatriz().getCantColumnas();
+		return this.getCantElementos() != 0;
 
 		//leer current
 		//escribir current
 	}
 	
 	
-	protected Object current(){
-		return  this.getCeldaActual().getContenido();
+	protected Celda<E> current(){
+		return  this.getCeldaActual();
 		
 	}
+	
 	protected void end(){
 		
 	}
 	
-	protected Celda<?> next(){
-		return this.getMatriz().dameCeldaDe(this.getNroFila(),this.getCeldaActual().getNroColumna()+ 1);
+	protected void next(){
+		this.setCeldaActual(this.getFila().get(cantElementos -1));
+		this.setCantElementos(getCantElementos() -1 );
 	}
 	
-	public Celda<?> getCeldaActual() {
+	
+	
+	
+	//get set
+
+
+	public int getCantElementos() {
+		return cantElementos;
+	}
+
+
+	public void setCantElementos(int cantElementos) {
+		this.cantElementos = cantElementos;
+	}
+
+
+	public Celda<E> getCeldaActual() {
 		return celdaActual;
 	}
 
-	public void setCeldaActual(Celda<?> celdaActual) {
+
+	public void setCeldaActual(Celda<E> celdaActual) {
 		this.celdaActual = celdaActual;
 	}
 
-	public Matriz<?> getMatriz() {
-		return matriz;
+
+	public List<Celda<E>> getFila() {
+		return fila;
 	}
 
-	public void setMatriz(Matriz<?> matriz) {
-		this.matriz = matriz;
+
+	public void setFila(List<Celda<E>> fila) {
+		this.fila = fila;
 	}
+
 
 	public int getNroFila() {
 		return nroFila;
 	}
 
+
 	public void setNroFila(int nroFila) {
 		this.nroFila = nroFila;
 	}
+	
+	
+	
+
 }

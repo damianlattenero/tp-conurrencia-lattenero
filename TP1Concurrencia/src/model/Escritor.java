@@ -1,12 +1,12 @@
 package model;
 
 
-public class Escritor extends Rol{
+public class Escritor extends Rol implements ReadWrite{
 	
-	private  void escribirResultadosSobreFila(int fila) throws InterruptedException{
-		RowIterator it = this.crearIterador(fila);
-		it.getMatriz().reservarFila(it.getNroFila());
+	private  void escribirResultadosSobreFila(Matriz<?> matriz, int fila) throws InterruptedException{
 		
+	    RowIterator<?> it = this.crearIterador(matriz,fila);
+	    matriz.reservarFila(fila);
 		while(it.hasCurrent()){
 			it.getCeldaActual().escribir();
 			it.next();
@@ -14,15 +14,20 @@ public class Escritor extends Rol{
 		iteradorExcMutua.signal();
 	}
 	
-	private boolean hayLectores(int x,int nroFilaAModificar){
-		return this.getMatriz().getEstructura()[nroFilaAModificar][x].getNroLectores() > 0;
-	}
 	
-	public boolean puedoReservarFila(int nroFilaAModificar){
-		boolean puedo = true;
-		for(int x = 0; x < this.getMatriz().getCantColumnas();x++){
-			puedo = puedo && (this.hayEscritores(x,nroFilaAModificar) || this.hayLectores(x,nroFilaAModificar));
-		}
-		return puedo;
+	public boolean puedoReservarFila(Matriz<?> matriz, int nroFilaAModificar){
+		return matriz.hayEscritores(nroFilaAModificar) || matriz.hayLectrores(nroFilaAModificar);
+	}
+
+	@Override
+	public void leer() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void escribir() {
+		// TODO Auto-generated method stub
+		
 	}
 }
