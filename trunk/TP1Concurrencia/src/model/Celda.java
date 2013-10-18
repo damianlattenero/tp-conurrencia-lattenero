@@ -72,31 +72,6 @@ public class Celda<E extends ReadWrite> {
 		
 	}
 
-	
-	//getters y setters
-	
-	
-	
-	public int getNroLectores() {
-		return nroLectores;
-	}
-
-	public E getContenido() {
-		return contenido;
-	}
-
-	public void setNroLectores(int nroLectores) {
-		this.nroLectores = nroLectores;
-	}
-
-	public boolean isHayEscritor() {
-		return hayEscritor;
-	}
-
-	public void setHayEscritor(boolean hayEscritor) {
-		this.hayEscritor = hayEscritor;
-	}
-	
 	public int getNroFila() {
 		return nroFila;
 	}
@@ -113,10 +88,28 @@ public class Celda<E extends ReadWrite> {
 		this.nroColumna = nroColumna;
 	}
 
-	
+	public E getContenido() {
+		return contenido;
+	}
 
-	public void setContenido(E object) {
-		this.contenido = object;
+	public void setContenido(E contenido) {
+		this.contenido = contenido;
+	}
+
+	public int getNroLectores() {
+		return nroLectores;
+	}
+
+	public void setNroLectores(int nroLectores) {
+		this.nroLectores = nroLectores;
+	}
+
+	public boolean isHayEscritor() {
+		return hayEscritor;
+	}
+
+	public void setHayEscritor(boolean hayEscritor) {
+		this.hayEscritor = hayEscritor;
 	}
 
 	public static Lock getLock() {
@@ -142,6 +135,10 @@ public class Celda<E extends ReadWrite> {
 	public void setConditionEscritura(Condition conditionEscritura) {
 		this.conditionEscritura = conditionEscritura;
 	}
+
+	
+	//getters y setters
+	
 	
 	
 
