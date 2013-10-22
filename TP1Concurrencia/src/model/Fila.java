@@ -14,18 +14,18 @@ public class Fila<E> {
 		}
 	}
 	
-	public IteradorLector<E> getWriterIterator() {
-		for(Celda<E> c : this.fila) {
-			c.empezarALeer();
-		}
-		return new IteradorLector<E>(this);
-	}
-
-	public IteradorEscritor<E> getReaderIterator() {
+	public IteradorEscritor<E> getWriterIterator() {
 		for(Celda<E> c : this.fila) {
 			c.empezarAEscribir();
 		}
 		return new IteradorEscritor<E>(this);
+	}
+
+	public IteradorLector<E> getReaderIterator() {
+		for(Celda<E> c : this.fila) {
+			c.empezarALeer();
+		}
+		return new IteradorLector<E>(this);
 	}
 	
 	public Celda<E> getCelda(int i) {

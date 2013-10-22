@@ -13,11 +13,9 @@ public abstract class IteradorDeFila<E> {
 		this.celdaActual = fila.getCelda(0);
 	}
 
-
 	protected boolean hasCurrent() {
-		return this.filaLockeada.getsize() < 0;
+		return this.nroCeldaActual < this.filaLockeada.getsize();
 	}
-	
 	
 	protected Celda<E> current(){
 		return  this.celdaActual;
@@ -25,17 +23,18 @@ public abstract class IteradorDeFila<E> {
 	}
 	
 	protected void end(){
-		this.celdaActual = null;
-		this.nroCeldaActual = this.filaLockeada.getsize();
+		while(hasCurrent()){
+			next();
+		}
 	}
 	
-	protected void next() throws InterruptedException{
+	protected void next() {
 		this.liberarCelda();
 		this.celdaActual = this.filaLockeada.getCelda(nroCeldaActual + 1);
 		this.nroCeldaActual ++;
 	}
 
 
-	public abstract void liberarCelda() throws InterruptedException;
+	public abstract void liberarCelda();
 	
 }

@@ -1,6 +1,6 @@
 package model;
 
-public class IteradorEscritor<E> extends IteradorDeFila<E>{
+public class IteradorEscritor<E> extends IteradorDeFila<E> {
 
 	public IteradorEscritor(Fila<E> fila) {
 		super(fila);
@@ -8,9 +8,7 @@ public class IteradorEscritor<E> extends IteradorDeFila<E>{
 
 	@Override
 	public void liberarCelda() {
-		
-			this.celdaActual.terminarDeEscribir();
-	
+		this.celdaActual.terminarDeEscribir();
 	}
 
 }

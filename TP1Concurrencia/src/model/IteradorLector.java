@@ -8,9 +8,7 @@ public class IteradorLector<E> extends IteradorDeFila<E>{
 
 	@Override
 	public void liberarCelda() {
-		
 		this.celdaActual.terminarDeLeer();
-		
 	}
 
 }
