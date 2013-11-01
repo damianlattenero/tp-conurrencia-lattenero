@@ -1,5 +1,7 @@
 package battleship;
 
+import java.util.List;
+
 import matriz.Matriz;
 
 public class Jugador {
@@ -10,5 +12,11 @@ public class Jugador {
 	public boolean scan(int i, int j){
 		return new ScanCelda(i, j).apply(matriz);
 	}
+	
+	public List<Integer> scanLine(int nrofila){
+		return new ScanLine(nrofila).apply(matriz);
+	}
+	
+	
 
 }
