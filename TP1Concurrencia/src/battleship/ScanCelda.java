@@ -20,13 +20,14 @@ public class ScanCelda extends Thread implements Command<Matriz<Barco>,Boolean>,
 	
 	@Override
 	public Boolean read(Barco e) {
+
 		try {
-			this.sleep(Servidor.UT);
+			Thread.sleep(Servidor.UT);
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		return e != null;
 	}
 

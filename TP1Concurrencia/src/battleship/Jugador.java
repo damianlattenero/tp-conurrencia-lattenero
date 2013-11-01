@@ -17,6 +17,12 @@ public class Jugador {
 		return new ScanLine(nrofila).apply(matriz);
 	}
 	
+	public boolean shoot(int i, int j){
+		return new Shoot(i,j).apply(matriz);
+	}
 	
+	public int shootLine(int nrofila){
+		return new ShootLine(nrofila).apply(matriz);
+	}
 
 }
