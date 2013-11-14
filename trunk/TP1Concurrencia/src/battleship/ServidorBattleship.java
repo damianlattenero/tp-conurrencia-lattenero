@@ -74,13 +74,14 @@ public class ServidorBattleship {
 	}		
 	
 	public static void main(String[] args) {
-		ServidorBattleship s = new ServidorBattleship(3, 3, 4);
+		ServidorBattleship s = new ServidorBattleship(9, 9, 9);
 		s.inicializarJuego();
 		Jugador j1 = new Jugador(s, new ShootAllWithoutScan());
 		Jugador j2 = new Jugador(s, new ScanAndShoot());
 		Jugador j3 = new Jugador(s, new SelectScanAndShoot());
-		
+		j1.estrategia();
 		j2.estrategia();
+		j3.estrategia();
 	}
 
 }
