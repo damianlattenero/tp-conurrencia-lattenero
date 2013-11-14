@@ -29,8 +29,12 @@ public abstract class IteradorDeFila<E> {
 	
 	public void next() {
 		this.liberarCelda();
-		this.celdaActual = this.filaLockeada.getCelda(nroCeldaActual + 1);
-		this.nroCeldaActual ++;
+		this.nroCeldaActual++;
+		if(hasCurrent()){
+			this.celdaActual = this.filaLockeada.getCelda(nroCeldaActual);
+		} else {
+			this.celdaActual = null;
+		}
 	}
 
 

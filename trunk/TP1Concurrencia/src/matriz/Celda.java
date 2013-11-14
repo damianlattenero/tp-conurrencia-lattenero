@@ -31,7 +31,7 @@ public class Celda<E> {
 	public void empezarALeer() {
 		lockLectura.lock();
 
-		while (isHayEscritor() || this.getContenido() == null) {
+		while (isHayEscritor()) {
 			conditionLectura.awaitUninterruptibly();
 		}
 		this.setNroLectores(this.getNroLectores() + 1);

@@ -17,7 +17,6 @@ public class EscritorDummy extends Thread implements Escritor<Integer> {
 	@Override
 	public void write(Celda<Integer> c) {
 		c.setContenido(5);
-		System.out.println("Escribi un 5");
 	}
 
 }
