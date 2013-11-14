@@ -7,6 +7,7 @@ import matriz.Matriz;
 public class Shoot extends Thread implements Escritor<Barco>, Command<Matriz<Barco>, Boolean>{
 	
 	int i, j;
+	boolean hundido = false;
 
 
 	public Shoot(int i, int j) {
@@ -18,27 +19,16 @@ public class Shoot extends Thread implements Escritor<Barco>, Command<Matriz<Bar
 	@Override
 	public Boolean apply(Matriz<Barco> m) {
 		m.escribirCelda(this, i, j);
-		return new ScanCelda(i, j).apply(m);
+		return hundido;
 	}
 
 	@Override
 	public void write(Celda<Barco> celda) {
-		try {
-			Thread.sleep(Servidor.UT);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		ServidorBattleship.dormir(2);
 		if(celda.getContenido() != null){
 			celda.getContenido().setEstaHundido(true);
+			hundido = true;
 		}
 	}
-
-	
-
-	
-
-	
 
 }

@@ -19,8 +19,6 @@ public class LectorDummy extends Thread implements Lector<Integer, Void> {
 
 	@Override
 	public Void read(Integer e) {
-		System.out.println("Soy el lector " + this.getId());
-		System.out.println("Estoy leyendo el contenido: " + e);
 		return null;
 	}
 

@@ -38,12 +38,7 @@ public class ScanLine extends Thread implements Command<Matriz<Barco>, List<Inte
 
 	@Override
 	public Boolean read(Barco e) {
-		try {
-			sleep(Servidor.UT/2);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		ServidorBattleship.dormir(0.5);
 		return e != null;
 	}
 

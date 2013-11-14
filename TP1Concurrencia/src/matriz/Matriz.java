@@ -29,7 +29,6 @@ public class Matriz<E> {
 	}
 
 	public IteradorLector<E> getIteradorLectorDeFila(int nroFila) {
-
 		return this.estructura.get(nroFila).getReaderIterator();
 
 	}
@@ -39,5 +38,15 @@ public class Matriz<E> {
 		return this.estructura.get(nroFila).getWriterIterator();
 
 	}
+
+	public int getCantFilas() {
+		return cantFilas;
+	}
+
+	public int getCantColumnas() {
+		return cantColumnas;
+	}
+	
+	
 
 }
