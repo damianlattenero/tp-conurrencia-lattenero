@@ -4,7 +4,7 @@ import matriz.Celda;
 import matriz.Escritor;
 import matriz.Matriz;
 
-public class Shoot extends Thread implements Escritor<Barco>, Command<Matriz<Barco>, Boolean>{
+public class Shoot implements Escritor<Barco>, Command<Matriz<Barco>, Boolean>{
 	
 	int i, j;
 	boolean hundido = false;
@@ -25,7 +25,7 @@ public class Shoot extends Thread implements Escritor<Barco>, Command<Matriz<Bar
 	@Override
 	public void write(Celda<Barco> celda) {
 		ServidorBattleship.dormir(2);
-		if(celda.getContenido() != null){
+		if(celda.getContenido() != null && !celda.getContenido().estaHundido){
 			celda.getContenido().setEstaHundido(true);
 			hundido = true;
 		}

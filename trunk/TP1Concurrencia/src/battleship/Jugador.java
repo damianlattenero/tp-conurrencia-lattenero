@@ -2,30 +2,40 @@ package battleship;
 
 import java.util.List;
 
+import ar.edu.unq.pconc.Channel;
+
 public class Jugador extends Thread{
 
 	private int puntos = 0;
 	private ServidorBattleship servidor;
 	private Estrategia estrategia;
+	private boolean terminarDeAtacar = false;
 	private String nombre;
+	private Channel<Boolean> channelParaTerminar;
 
-	public Jugador(ServidorBattleship s, Estrategia e, String nombre) {
+	public Jugador(ServidorBattleship s, Estrategia e, String nombre, int canal) {
 		super();
 		this.servidor = s;
 		this.estrategia = e;
-		this.setNombre(nombre);
+		this.nombre = nombre;
+		this.channelParaTerminar = new Channel<>(canal,true);
 	}
 	
 	@Override
 	public void run() {
-		while((this.servidor.channel2.receive())){
-			this.estrategia.estategia(this);
+		while(!terminarDeAtacar){
+			System.out.println("Empieza " + this.getNombre());
+			this.estrategia.estrategia(this);
+			this.preguntarSiTerminoElJuego();
 		}
 	}
-
 	
-
-
+	public boolean preguntarSiTerminoElJuego(){
+		this.getChannelParaTerminar().send(true);
+		this.terminarDeAtacar = this.getChannelParaTerminar().receive();
+		return this.terminarDeAtacar;
+	}
+	
 	public boolean scan(int i, int j) {
 		return getServidor().execute(new ScanCelda(i, j));
 	}
@@ -38,7 +48,7 @@ public class Jugador extends Thread{
 		Boolean b = getServidor().execute(new Shoot(i, j));
 		if (b) {
 			this.puntos++;
-			this.servidor.setCantBarcos(servidor.getCantBarcos() - 1);
+			this.servidor.restarBarcos(1);
 		}
 		return b;
 	}
@@ -46,7 +56,7 @@ public class Jugador extends Thread{
 	public int shootLine(int nrofila) {
 		Integer hundidos = getServidor().execute(new ShootLine(nrofila));
 		this.puntos = this.puntos + hundidos;
-		this.servidor.setCantBarcos(servidor.getCantBarcos() - hundidos);
+		this.servidor.restarBarcos(hundidos);
 		return hundidos;
 	}
 
@@ -65,5 +75,9 @@ public class Jugador extends Thread{
 	public String getNombre() {
 		return nombre;
 	}
-
+	
+	public Channel<Boolean> getChannelParaTerminar() {
+		return channelParaTerminar;
+	}
+	
 }

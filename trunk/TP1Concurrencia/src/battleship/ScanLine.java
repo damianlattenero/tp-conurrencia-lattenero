@@ -7,17 +7,13 @@ import matriz.IteradorLector;
 import matriz.Lector;
 import matriz.Matriz;
 
-public class ScanLine extends Thread implements Command<Matriz<Barco>, List<Integer>>, Lector<Barco, Boolean>{
+public class ScanLine implements Command<Matriz<Barco>, List<Integer>>, Lector<Barco, Boolean>{
 
 	private int nroFila;
-
-	
 
 	public ScanLine(int nrofila2) {
 		this.nroFila =  nrofila2;
 	}
-
-
 
 	@Override
 	public List<Integer> apply(Matriz<Barco> m) {
@@ -33,8 +29,6 @@ public class ScanLine extends Thread implements Command<Matriz<Barco>, List<Inte
 		
 		return ret;
 	}
-
-
 
 	@Override
 	public Boolean read(Barco e) {
