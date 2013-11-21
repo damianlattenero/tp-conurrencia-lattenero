@@ -1,7 +1,7 @@
 package battleship;
 
 public interface Estrategia {
-
-	void estategia(Jugador jugador);
+	
+	void estrategia(Jugador jugador);
 
 }

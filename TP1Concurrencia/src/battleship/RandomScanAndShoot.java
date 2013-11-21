@@ -1,9 +1,9 @@
 package battleship;
 
-public class SelectScanAndShoot implements Estrategia {
+public class RandomScanAndShoot implements Estrategia {
 
 	@Override
-	public void estategia(Jugador jugador) {
+	public void estrategia(Jugador jugador) {
 		//encontrar bien numero aleatorio
 		int i = (int) Math.round(Math.random() * (jugador.getServidor().getMatriz().getCantColumnas()-1));
 		int j = (int) Math.round(Math.random() * (jugador.getServidor().getMatriz().getCantFilas()-1));

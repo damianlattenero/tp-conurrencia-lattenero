@@ -5,7 +5,7 @@ import matriz.Escritor;
 import matriz.IteradorEscritor;
 import matriz.Matriz;
 
-public class ShootLine extends Thread implements Escritor<Barco>, Command<Matriz<Barco>, Integer>{
+public class ShootLine implements Escritor<Barco>, Command<Matriz<Barco>, Integer>{
 
 	int nrofila;
 	int hundidos = 0;
@@ -28,7 +28,7 @@ public class ShootLine extends Thread implements Escritor<Barco>, Command<Matriz
 	@Override
 	public void write(Celda<Barco> celda) {
 		ServidorBattleship.dormir(1);
-		if(celda.getContenido() != null){
+		if(celda.getContenido() != null && !celda.getContenido().estaHundido){
 			celda.getContenido().setEstaHundido(true);
 			hundidos++;
 		}
