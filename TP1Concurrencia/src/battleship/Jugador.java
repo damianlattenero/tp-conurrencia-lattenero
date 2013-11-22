@@ -26,7 +26,6 @@ public class Jugador extends Thread{
 		while(!terminarDeAtacar){
 			System.out.println("Empieza " + this.getNombre());
 			this.estrategia.estrategia(this);
-			this.preguntarSiTerminoElJuego();
 		}
 	}
 	

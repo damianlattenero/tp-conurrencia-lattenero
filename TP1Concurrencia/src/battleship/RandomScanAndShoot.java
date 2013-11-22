@@ -10,6 +10,7 @@ public class RandomScanAndShoot implements Estrategia {
 		if(jugador.scan(i, j)){
 			jugador.shoot(i, j);
 		}
+		jugador.preguntarSiTerminoElJuego();
 	}
 
 }
