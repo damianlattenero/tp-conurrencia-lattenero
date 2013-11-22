@@ -30,7 +30,14 @@ public class Jugador extends Thread{
 	}
 	
 	public boolean preguntarSiTerminoElJuego(){
+		
 		this.getChannelParaTerminar().send(true);
+		try {
+			sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.terminarDeAtacar = this.getChannelParaTerminar().receive();
 		return this.terminarDeAtacar;
 	}

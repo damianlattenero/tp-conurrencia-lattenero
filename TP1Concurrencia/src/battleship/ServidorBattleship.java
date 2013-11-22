@@ -125,6 +125,7 @@ public class ServidorBattleship {
 		for (RecibirPedidosDeTerminacion r : s.getChannelsdejugadores()) {
 			r.start();
 		}
+		
 	}
 
 	public void setJugadores(List<Jugador> jugadores) {
